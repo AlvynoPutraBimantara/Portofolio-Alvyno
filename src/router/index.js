@@ -1,8 +1,16 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
-const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
-  routes: [],
-})
+import Dashboard from '../views/DashboardView.vue'
+import Projects from '../views/ProjectsView.vue'
+import ProjectDetail from '../views/ProjectDetailView.vue'
 
-export default router
+const routes = [
+  { path: '/', component: Dashboard },
+  { path: '/projects', component: Projects },
+  { path: '/projects/:id', component: ProjectDetail, props: true },
+]
+
+export default createRouter({
+  history: createWebHistory(),
+  routes,
+})
