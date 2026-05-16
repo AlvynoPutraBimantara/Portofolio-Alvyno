@@ -5,7 +5,7 @@ import { projects } from '../data/projectdb.js'
 
 <template>
   <section>
-    <h1 class="page-title">SEMUA PROYEK</h1>
+    <h1 class="page-title">All Projects</h1>
     <div class="grid">
       <ProjectCard v-for="project in projects" :key="project.id" :project="project" />
     </div>

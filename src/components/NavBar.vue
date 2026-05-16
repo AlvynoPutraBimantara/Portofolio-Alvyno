@@ -30,6 +30,12 @@ const route = useRoute()
   z-index: 100;
 }
 
+.brand {
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: var(--primary);
+}
+
 .nav-links {
   display: flex;
   gap: 24px;
