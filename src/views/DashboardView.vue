@@ -57,35 +57,50 @@ function scrollToSection(id) {
         <div class="bio-name-block">
           <h1>{{ bio.name }}</h1>
           <p class="role">{{ bio.role }}</p>
-          <p class="location">{{ bio.location }}</p>
+          <p class="location">
+            <font-awesome-icon icon="fa-solid fa-location-dot" /> {{ bio.location }}
+          </p>
         </div>
       </div>
       <div class="bio-links">
-        <a :href="bio.github" target="_blank" class="link-pill"> GitHub </a>
-        <a :href="bio.linkedin" target="_blank" class="link-pill"> LinkedIn </a>
-        <button class="link-pill contact-btn" @click="showContact = true">Contact Info</button>
+        <a :href="bio.github" target="_blank" class="link-pill">
+          <font-awesome-icon icon="fa-brands fa-github" /> GitHub
+        </a>
+        <a :href="bio.linkedin" target="_blank" class="link-pill">
+          <font-awesome-icon icon="fa-brands fa-linkedin" /> LinkedIn
+        </a>
+        <button class="link-pill contact-btn" @click="showContact = true">
+          <font-awesome-icon icon="fa-solid fa-address-card" /> Contact Info
+        </button>
       </div>
     </section>
 
-    <!-- CONTACT -->
+    <!-- CONTACT MODAL -->
     <Teleport to="body">
       <div v-if="showContact" class="modal-overlay" @click.self="showContact = false">
         <div class="contact-modal">
-          <button class="modal-close" @click="showContact = false">✕</button>
+          <button class="modal-close" @click="showContact = false">
+            <font-awesome-icon icon="fa-solid fa-xmark" />
+          </button>
           <h3>Contact Info</h3>
 
           <!-- WhatsApp -->
           <div class="contact-row">
+            <font-awesome-icon icon="fa-brands fa-whatsapp" class="contact-icon wa-icon" />
             <a href="https://wa.me/6287857909820" target="_blank" class="contact-value wa-link">
               +62 878-5790-9820
             </a>
             <button class="copy-btn" @click="copyText('+6287857909820')" title="Copy number">
-              {{ copyFeedback === '+6287857909820' ? '✓ Copied' : ' Copy' }}
+              <font-awesome-icon
+                :icon="copyFeedback === '+6287857909820' ? 'fa-solid fa-check' : 'fa-solid fa-copy'"
+              />
+              {{ copyFeedback === '+6287857909820' ? 'Copied' : 'Copy' }}
             </button>
           </div>
 
           <!-- Email -->
           <div class="contact-row">
+            <font-awesome-icon icon="fa-solid fa-envelope" class="contact-icon" />
             <span
               class="contact-value email-copy"
               @click="copyText('alvyno.putra.b@gmail.com')"
@@ -98,7 +113,14 @@ function scrollToSection(id) {
               @click="copyText('alvyno.putra.b@gmail.com')"
               title="Copy email"
             >
-              {{ copyFeedback === 'alvyno.putra.b@gmail.com' ? '✓ Copied' : ' Copy' }}
+              <font-awesome-icon
+                :icon="
+                  copyFeedback === 'alvyno.putra.b@gmail.com'
+                    ? 'fa-solid fa-check'
+                    : 'fa-solid fa-copy'
+                "
+              />
+              {{ copyFeedback === 'alvyno.putra.b@gmail.com' ? 'Copied' : 'Copy' }}
             </button>
           </div>
 
@@ -107,10 +129,10 @@ function scrollToSection(id) {
       </div>
     </Teleport>
 
-    <!--  CV -->
+    <!-- CV SECTIONS -->
     <section v-for="sec in cvSections" :key="sec.id" :id="sec.id" class="cv-section">
       <div class="section-header">
-        <span class="section-icon">{{ sec.icon }}</span>
+        <font-awesome-icon :icon="sec.faIcon" class="section-icon" />
         <h2>{{ sec.label }}</h2>
       </div>
 
@@ -125,7 +147,9 @@ function scrollToSection(id) {
             <div class="sub-title-block">
               <h3>{{ sub.title }}</h3>
               <span v-if="sub.subtitle" class="sub-subtitle">{{ sub.subtitle }}</span>
-              <span v-if="sub.period" class="sub-period"> {{ sub.period }}</span>
+              <span v-if="sub.period" class="sub-period">
+                <font-awesome-icon icon="fa-regular fa-calendar" /> {{ sub.period }}
+              </span>
             </div>
             <span v-if="sub.badge" class="sub-badge">{{ sub.badge }}</span>
           </div>
@@ -155,25 +179,29 @@ function scrollToSection(id) {
       </div>
     </section>
 
-    <!-- PROJECTS -->
+    <!-- PROJECTS SECTION -->
     <section class="cv-section" id="projects">
       <div class="section-header">
-        <span class="section-icon"></span>
+        <font-awesome-icon icon="fa-solid fa-pen-ruler" class="section-icon" />
         <h2>My Projects</h2>
       </div>
       <div class="carousel-wrapper">
-        <button class="scroll-btn" @click="scrollLeft">‹</button>
+        <button class="scroll-btn" @click="scrollLeft">
+          <font-awesome-icon icon="fa-solid fa-chevron-left" />
+        </button>
         <div class="carousel" ref="carouselRef">
           <div class="carousel-item" v-for="project in projects" :key="project.id">
             <ProjectCard :project="project" />
           </div>
         </div>
-        <button class="scroll-btn" @click="scrollRight">›</button>
+        <button class="scroll-btn" @click="scrollRight">
+          <font-awesome-icon icon="fa-solid fa-chevron-right" />
+        </button>
       </div>
     </section>
   </div>
 
-  <!-- NAVIGATION -->
+  <!-- SIDE NAVIGATION -->
   <nav class="side-nav">
     <button
       v-for="sec in cvSections"
@@ -183,20 +211,22 @@ function scrollToSection(id) {
       @click="scrollToSection(sec.id)"
       :title="sec.label"
     >
-      <span class="side-nav-icon">{{ sec.icon }}</span>
+      <font-awesome-icon :icon="sec.faIcon" class="side-nav-icon" />
       <span class="side-nav-label">{{ sec.label }}</span>
     </button>
     <button class="side-nav-btn" @click="scrollToSection('projects')" title="Projects">
-      <span class="side-nav-icon"></span>
+      <font-awesome-icon icon="fa-solid fa-pen-ruler" class="side-nav-icon" />
       <span class="side-nav-label">Projects</span>
     </button>
   </nav>
 
-  <!-- IMAGES -->
+  <!-- IMAGE MODAL -->
   <Teleport to="body">
     <div v-if="showImageModal" class="modal-overlay" @click.self="closeImageModal">
       <div class="image-modal-box">
-        <button class="modal-close" @click="closeImageModal">✕</button>
+        <button class="modal-close" @click="closeImageModal">
+          <font-awesome-icon icon="fa-solid fa-xmark" />
+        </button>
         <img :src="modalImage" alt="Full size" class="modal-img" />
       </div>
     </div>
@@ -446,7 +476,9 @@ function scrollToSection(id) {
 }
 
 .sub-period {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
   font-size: 0.8rem;
   color: var(--text-muted);
 }
@@ -664,6 +696,9 @@ function scrollToSection(id) {
   transition: var(--transition);
   white-space: nowrap;
   font-family: inherit;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
 }
 
 .copy-btn:hover {
@@ -717,6 +752,14 @@ function scrollToSection(id) {
   border-radius: var(--radius);
   object-fit: contain;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+}
+
+/* ════════════════════════════════════════
+   WHATSAPP ICON COLOR
+════════════════════════════════════════ */
+.wa-icon {
+  color: #25d366;
+  font-size: 1.3rem;
 }
 
 /* ════════════════════════════════════════

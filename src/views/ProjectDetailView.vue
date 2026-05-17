@@ -204,7 +204,7 @@ function shortCaption(text) {
       <div class="detail-links">
         <a v-if="project.liveUrl" :href="project.liveUrl" target="_blank" class="btn">Live Demo</a>
         <a v-if="project.githubUrl" :href="project.githubUrl" target="_blank" class="btn outline"
-          >GitHub</a
+          ><font-awesome-icon icon="fa-brands fa-github" /> GitHub</a
         >
       </div>
     </section>

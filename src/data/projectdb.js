@@ -381,6 +381,7 @@ export const cvSections = [
   {
     id: 'about',
     label: 'About Me',
+    faIcon: ['fas', 'circle-user'],
     items: [
       {
         title: 'Tentang Saya',
@@ -398,6 +399,7 @@ export const cvSections = [
   {
     id: 'education',
     label: 'Education',
+    faIcon: ['fas', 'graduation-cap'],
     items: [
       {
         title: 'Politeknik Elektronika Negeri Surabaya',
@@ -417,6 +419,7 @@ export const cvSections = [
   {
     id: 'experience',
     label: 'Experience',
+    faIcon: ['fas', 'briefcase'],
     items: [
       {
         title: 'Dinas Lingkungan Hidup Prov. Jawa Timur',
@@ -440,6 +443,7 @@ export const cvSections = [
   {
     id: 'training',
     label: 'Training',
+    faIcon: ['fas', 'person-chalkboard'],
     items: [
       {
         title: 'UPT BLK Kota Surabaya',
@@ -458,6 +462,7 @@ export const cvSections = [
   {
     id: 'certifications',
     label: 'Certifications',
+    faIcon: ['fas', 'award'],
     items: [
       {
         title: 'Pemasangan Jaringan Komputer',
@@ -490,6 +495,7 @@ export const cvSections = [
   {
     id: 'skills',
     label: 'Skills',
+    faIcon: ['fas', 'bolt'],
     items: [
       {
         title: 'Software & Web Development',
