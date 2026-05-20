@@ -383,7 +383,7 @@ function scrollToSection(id) {
 /* LAYOUT*/
 .dashboard {
   position: relative;
-  padding-right: 60px; /* space for side nav */
+  padding-right: 60px;
 }
 
 /* ════════════════════════════════════════
