@@ -387,9 +387,8 @@ export const cvSections = [
         title: 'Tentang Saya',
         points: [
           'Fresh Graduate Ahli Madya Teknik Informatika dari Politeknik Elektronika Negeri Surabaya.',
-          'Berpengalaman sebagai asisten staff IT dan petugas data entry di lingkungan instansi pemerintah.',
-          'Berpengalaman dalam pengembangan fullstack aplikasi berarsitektur microservice berbasis web.',
-          'Platform utama: Vue.js, Node.js, dan MySQL.',
+          'Berpengalaman sebagai Asisten Staf IT dan Petugas Data Entry di Dinas Lingkungan Hidup Provinsi Jawa Timur.',
+          'Berpengalaman dalam pengembangan fullstack aplikasi berarsitektur microservice berbasis web dengan platform Vue.js, Node.js dan MySQL.',
         ],
         images: [],
       },
@@ -411,7 +410,12 @@ export const cvSections = [
           'IPK: 3.58',
           'Proyek Akhir: Katalog Belanja GBWT (Gerakan Belanja di Warung Tetangga) — Aplikasi Pendukung Program Pemberdayaan UMKM RW 7 Kel. Sambikerep Surabaya.',
         ],
-        images: [{ src: '/src/assets/images/Scan Ijazah.jpg', alt: 'PENS Campus' }],
+        images: [
+          {
+            src: '/src/assets/images/Scan Ijazah.jpg',
+            caption: { intro: 'Ijazah D3 Teknik Informatika, PENS.', points: [] },
+          },
+        ],
       },
     ],
   },
@@ -433,8 +437,14 @@ export const cvSections = [
         ],
         tags: ['Vue.js', 'Node.js', 'MySQL', 'Apache', 'Ubuntu'],
         images: [
-          { src: '/src/assets/images/magang1.jpg', alt: 'Internship' },
-          { src: '/src/assets/images/magang2.jpg', alt: 'Internship' },
+          {
+            src: '/src/assets/images/magang1.jpg',
+            caption: { intro: 'Kegiatan magang di DLH Prov. Jatim.', points: [] },
+          },
+          {
+            src: '/src/assets/images/magang2.jpg',
+            caption: { intro: 'Suasana kantor DLH Prov. Jatim.', points: [] },
+          },
         ],
       },
     ],
@@ -451,10 +461,18 @@ export const cvSections = [
         period: 'Oktober 2025 – Desember 2025',
         badge: 'Completed',
         points: [
-          'Pelatihan resmi Pemasangan Jaringan Komputer di UPT BLK Kota Surabaya.',
+          'Pelatihan resmi menyangkut jaringan komputer di UPT BLK Kota Surabaya.',
           'Materi mencakup instalasi hardware jaringan, setup LAN, WLAN, dan konfigurasi routing protocol.',
         ],
-        images: [{ src: '/src/assets/images/Scan sertifikat pelatihan.jpg', alt: 'BLK Training' }],
+        images: [
+          {
+            src: '/src/assets/images/certificates/Scan sertifikat pelatihan.jpg',
+            caption: {
+              intro: 'Sertifikat Pemasangan Jaringan Komputer, UPT BLK Kota Surabaya.',
+              points: [],
+            },
+          },
+        ],
       },
     ],
   },
@@ -470,10 +488,18 @@ export const cvSections = [
         period: 'Diterbitkan November 2025 s.d. November 2035',
         badge: '',
         points: [
-          'Sertifikat resmi pelatihan Pemasangan Jaringan Komputer dari UPT BLK Kota Surabaya.',
+          'Sertifikat resmi pelatihan pemasangan jaringan komputer dari UPT BLK Kota Surabaya.',
           'Sertifikat kompetensi menyangkut: Instalasi hardware jaringan komputer, Setup LAN (Local Area Network) dan WLAN (Wireless LAN), Konfigurasi Routing Protocol: BGP, OSPF, EIGRP, TCP/IP. ',
         ],
-        images: [{ src: '/src/assets/images/Scan sertifikat pelatihan.jpg', alt: 'BLK Training' }],
+        images: [
+          {
+            src: '/src/assets/images/certificates/Scan sertifikat pelatihan.jpg',
+            caption: {
+              intro: 'Sertifikat Pemasangan Jaringan Komputer dari UPT BLK Kota Surabaya.',
+              points: [],
+            },
+          },
+        ],
       },
       {
         title: 'Sertifikat Kompetensi Bhs. Inggris',
@@ -486,8 +512,107 @@ export const cvSections = [
           'Berlaku hingga Juli 2027.',
         ],
         images: [
-          { src: '/src/assets/images/Sertifikat Bahasa Inggris.jpg', alt: 'TOEFL Certificate' },
+          {
+            src: '/src/assets/images/certificates/Sertifikat Bahasa Inggris.jpg',
+            caption: {
+              intro: 'TOEFL ITP (like) Certificate dari PENS Language and Culture Center (PLCC).',
+              points: ['Skor: 553', 'Berlaku hingga Juli 2027.'],
+            },
+          },
         ],
+      },
+      {
+        title: 'Sertifikasi pembelajaran singkat online',
+        subtitle: '',
+        period: '',
+        badge: '',
+        points: [],
+        images: [
+          {
+            src: '/src/assets/images/certificates/BuildanAIAgent.jpg',
+            caption: {
+              intro: 'IBM SkillsBuild — Build an AI Agent.',
+              points: [
+                'Fundamental AI untuk programming dan AI Agents.',
+                'AI Ethics, Generative AI, Critical Thinking, Problem Solving.',
+                'Agent Deployment Lifecycle, Agentic AI, AI Agent Workflow.',
+                'Evaluation Metrics, IBM watsonx.ai.',
+                'PWID-B1021600.',
+              ],
+            },
+          },
+          {
+            src: '/src/assets/images/certificates/Cisco Academy Intro to Cybersecurity.jpg',
+            caption: {
+              intro: 'Cisco Academy — Introduction to Cybersecurity.',
+              points: [
+                'Threat Detection dan Cyber Best Practices.',
+                'Network Vulnerabilities.',
+                'Privacy and Data Confidentiality.',
+              ],
+            },
+          },
+          {
+            src: '/src/assets/images/certificates/Cloud_Architecting.jpg',
+            caption: {
+              intro: 'AWS Academy — Cloud Architecting.',
+              points: [
+                'Architecting Solutions on AWS.',
+                'AWS Cloud Best Practices.',
+                'Building Infrastructure on AWS.',
+              ],
+            },
+          },
+          {
+            src: '/src/assets/images/certificates/Cloud_Foundations.jpg',
+            caption: {
+              intro: 'AWS Academy — Cloud Foundations.',
+              points: [
+                'AWS Architecture dan AWS Cloud.',
+                'AWS Core Services dan AWS Pricing.',
+                'AWS Support.',
+              ],
+            },
+          },
+          {
+            src: '/src/assets/images/certificates/NetworkTechnician.jpg',
+            caption: {
+              intro: 'Cisco Academy — Network Technician.',
+              points: [
+                'Cisco IOS, Cisco Routers, Cisco Switches, Cisco Devices.',
+                'Ethernet, Network Media, Network Types, Network Layer Protocols.',
+                'IPv4 dan IPv6 Addressing.',
+                'Transport Layer Protocols, Application Layer Services.',
+                'Cloud Services, Wireless Access.',
+                'Binary Systems, Protocols Standards, Documentation.',
+                'Hierarchical Network Design, Network Troubleshooting.',
+                'Endpoint Devices, Help Desk, User Support.',
+              ],
+            },
+          },
+          {
+            src: '/src/assets/images/certificates/Data Analyst-intro.jpg',
+            caption: {
+              intro: 'Pengenalan fundamental mengenai analisis data.',
+              points: [],
+            },
+          },
+          {
+            src: '/src/assets/images/certificates/Vibe Coding-intro.jpg',
+            caption: {
+              intro: 'Pengenalan fundamental Vibe-coding untuk Software Development.',
+              points: [],
+            },
+          },
+          {
+            src: '/src/assets/images/certificates/dibimbing certificate.jpg',
+            caption: {
+              intro: 'Dibimbing — Fullstack Web Development.',
+              points: [],
+            },
+          },
+        ],
+        tags: ['Cisco', 'AWS Academy', 'IBM Skillsbud', 'RevoU', 'Dibimbing'],
       },
     ],
   },
@@ -498,15 +623,15 @@ export const cvSections = [
     faIcon: ['fas', 'bolt'],
     items: [
       {
-        title: 'Software & Web Development',
+        title: 'Programming & Web Development',
         points: [
           'Vue.js — Membangun halaman frontend',
           'HTML & CSS — Membangun Layout responsif dan styling website',
+          'PHP — Digunakan untuk fitur backend dasar dan aplikasi web',
           'Bootstrap — Membantu mempercepat pembuatan tampilan UI yang responsif',
           'Node.js — Digunakan untuk logika backend dan menjalankan JavaScript di sisi server',
           'Express — Digunakan untuk membuat REST API dan mengatur routing backend',
           'MySQL — Database relasional, tabel, dan query',
-          'PHP — Digunakan untuk fitur backend dasar dan aplikasi web',
           'Apache Web Server — Melakukan konfigurasi dan menjalankan environment web lokal/server',
           'Ubuntu — Familiar dengan environment Linux dan setup server sederhana',
         ],

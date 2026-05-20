@@ -3,7 +3,7 @@ import { ref } from 'vue'
 import ProjectCard from '../components/ProjectCard.vue'
 import { projects, bio, cvSections } from '../data/projectdb.js'
 
-// Carousel
+// Projects carousel
 const carouselRef = ref(null)
 function scrollLeft() {
   carouselRef.value.scrollBy({ left: -320, behavior: 'smooth' })
@@ -15,7 +15,6 @@ function scrollRight() {
 // Contact modal
 const showContact = ref(false)
 const copyFeedback = ref('')
-
 function copyText(text) {
   navigator.clipboard.writeText(text)
   copyFeedback.value = text
@@ -24,18 +23,112 @@ function copyText(text) {
   }, 2000)
 }
 
-// Image modal
-const modalImage = ref(null)
+// ── IMAGE MODAL (with carousel + zoom) ───────────
 const showImageModal = ref(false)
+const modalImages = ref([]) // array of { src, caption } for the current subsection
+const modalIndex = ref(0)
 
-function openImageModal(img) {
-  modalImage.value = img
+function openImageModal(images, startIndex) {
+  modalImages.value = images.map((img) => ({
+    ...img,
+    // normalize: if caption is a plain string or missing, convert to object
+    caption:
+      img.caption && typeof img.caption === 'object'
+        ? img.caption
+        : { intro: img.caption || img.alt || '', points: [] },
+  }))
+  modalIndex.value = startIndex
+  resetZoom()
   showImageModal.value = true
 }
 function closeImageModal() {
   showImageModal.value = false
-  modalImage.value = null
+  resetZoom()
 }
+function modalPrev() {
+  modalIndex.value = (modalIndex.value - 1 + modalImages.value.length) % modalImages.value.length
+  resetZoom()
+}
+function modalNext() {
+  modalIndex.value = (modalIndex.value + 1) % modalImages.value.length
+  resetZoom()
+}
+
+// ── ZOOM ─────────────────────────────────────────
+const zoom = ref(1)
+const isDragging = ref(false)
+const dragStart = ref({ x: 0, y: 0 })
+const translate = ref({ x: 0, y: 0 })
+const lastTranslate = ref({ x: 0, y: 0 })
+const ZOOM_STEP = 0.4
+const ZOOM_MIN = 1
+const ZOOM_MAX = 5
+
+function resetZoom() {
+  zoom.value = 1
+  translate.value = { x: 0, y: 0 }
+  lastTranslate.value = { x: 0, y: 0 }
+  isDragging.value = false
+}
+function zoomIn() {
+  zoom.value = Math.min(ZOOM_MAX, +(zoom.value + ZOOM_STEP).toFixed(2))
+}
+function zoomOut() {
+  zoom.value = Math.max(ZOOM_MIN, +(zoom.value - ZOOM_STEP).toFixed(2))
+  if (zoom.value === ZOOM_MIN) translate.value = { x: 0, y: 0 }
+}
+function onWheel(e) {
+  e.preventDefault()
+  e.deltaY < 0 ? zoomIn() : zoomOut()
+}
+function onDblClick() {
+  zoom.value > 1 ? resetZoom() : zoomIn()
+}
+
+function onMouseDown(e) {
+  if (zoom.value <= 1) return
+  isDragging.value = true
+  dragStart.value = { x: e.clientX - lastTranslate.value.x, y: e.clientY - lastTranslate.value.y }
+}
+function onMouseMove(e) {
+  if (!isDragging.value) return
+  translate.value = { x: e.clientX - dragStart.value.x, y: e.clientY - dragStart.value.y }
+}
+function onMouseUp() {
+  isDragging.value = false
+  lastTranslate.value = { ...translate.value }
+}
+
+const touchStart = ref({ x: 0, y: 0 })
+function onTouchStart(e) {
+  if (zoom.value <= 1) return
+  const t = e.touches[0]
+  touchStart.value = { x: t.clientX - lastTranslate.value.x, y: t.clientY - lastTranslate.value.y }
+}
+function onTouchMove(e) {
+  if (zoom.value <= 1) return
+  e.preventDefault()
+  const t = e.touches[0]
+  translate.value = { x: t.clientX - touchStart.value.x, y: t.clientY - touchStart.value.y }
+}
+function onTouchEnd() {
+  lastTranslate.value = { ...translate.value }
+}
+
+// Keyboard support
+function onKeydown(e) {
+  if (!showImageModal.value) return
+  if (e.key === 'ArrowLeft') modalPrev()
+  if (e.key === 'ArrowRight') modalNext()
+  if (e.key === 'Escape') closeImageModal()
+  if (e.key === '+') zoomIn()
+  if (e.key === '-') zoomOut()
+  if (e.key === '0') resetZoom()
+}
+
+import { onMounted, onUnmounted } from 'vue'
+onMounted(() => window.addEventListener('keydown', onKeydown))
+onUnmounted(() => window.removeEventListener('keydown', onKeydown))
 
 // Section shortcut
 const activeSection = ref('')
@@ -172,7 +265,7 @@ function scrollToSection(id) {
               :src="img.src"
               :alt="img.alt || sub.title"
               class="sub-img"
-              @click="openImageModal(img.src)"
+              @click="openImageModal(sub.images, ii)"
             />
           </div>
         </div>
@@ -223,11 +316,64 @@ function scrollToSection(id) {
   <!-- IMAGE MODAL -->
   <Teleport to="body">
     <div v-if="showImageModal" class="modal-overlay" @click.self="closeImageModal">
-      <div class="image-modal-box">
+      <div class="modal-box">
         <button class="modal-close" @click="closeImageModal">
           <font-awesome-icon icon="fa-solid fa-xmark" />
         </button>
-        <img :src="modalImage" alt="Full size" class="modal-img" />
+
+        <button v-if="modalImages.length > 1" class="modal-nav" @click="modalPrev">‹</button>
+
+        <div class="modal-content">
+          <!-- Zoom bar -->
+          <div class="zoom-bar">
+            <button class="zoom-btn" @click="zoomOut" :disabled="zoom <= 1">−</button>
+            <span class="zoom-label">{{ Math.round(zoom * 100) }}%</span>
+            <button class="zoom-btn" @click="zoomIn" :disabled="zoom >= 5">+</button>
+            <button class="zoom-btn reset" @click="resetZoom">⊙</button>
+          </div>
+
+          <!-- Viewport -->
+          <div
+            class="img-viewport"
+            @wheel.prevent="onWheel"
+            @dblclick="onDblClick"
+            @mousedown="onMouseDown"
+            @mousemove="onMouseMove"
+            @mouseup="onMouseUp"
+            @mouseleave="onMouseUp"
+            @touchstart="onTouchStart"
+            @touchmove.prevent="onTouchMove"
+            @touchend="onTouchEnd"
+            :style="{ cursor: zoom > 1 ? (isDragging ? 'grabbing' : 'grab') : 'zoom-in' }"
+          >
+            <img
+              :src="modalImages[modalIndex].src"
+              :alt="modalImages[modalIndex].alt"
+              class="modal-img"
+              :style="{
+                transform: `scale(${zoom}) translate(${translate.x / zoom}px, ${translate.y / zoom}px)`,
+                transition: isDragging ? 'none' : 'transform 0.2s ease',
+              }"
+              draggable="false"
+            />
+          </div>
+
+          <!-- Caption -->
+          <div class="modal-caption">
+            <p v-if="modalImages[modalIndex].caption?.intro" class="caption-intro">
+              {{ modalImages[modalIndex].caption.intro }}
+            </p>
+            <ul v-if="modalImages[modalIndex].caption?.points?.length" class="caption-points">
+              <li v-for="(pt, pi) in modalImages[modalIndex].caption.points" :key="pi">{{ pt }}</li>
+            </ul>
+          </div>
+        </div>
+
+        <button v-if="modalImages.length > 1" class="modal-nav" @click="modalNext">›</button>
+
+        <div v-if="modalImages.length > 1" class="modal-counter">
+          {{ modalIndex + 1 }} / {{ modalImages.length }}
+        </div>
       </div>
     </div>
   </Teleport>
@@ -313,9 +459,8 @@ function scrollToSection(id) {
   background: var(--surface);
   border-radius: var(--radius);
   padding: 28px 32px;
-  box-shadow: var(--shadow);
   margin-bottom: 32px;
-  border-left: 5px solid var(--primary);
+  box-shadow: 10px 10px 10px rgba(106, 90, 205, 0.35);
 }
 
 .bio-left {
@@ -396,9 +541,9 @@ function scrollToSection(id) {
   background: var(--surface);
   border-radius: var(--radius);
   padding: 28px 32px;
-  box-shadow: var(--shadow);
   margin-bottom: 28px;
   scroll-margin-top: 90px;
+  box-shadow: 5px 5px 5px rgba(106, 90, 205, 0.35);
 }
 
 .section-header {
@@ -411,7 +556,8 @@ function scrollToSection(id) {
 }
 
 .section-icon {
-  font-size: 1.4rem;
+  font-size: 1.2rem;
+  color: var(--primary);
 }
 
 .section-header h2 {
@@ -616,7 +762,8 @@ function scrollToSection(id) {
 .modal-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(4px);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -714,21 +861,26 @@ function scrollToSection(id) {
   font-weight: 600;
 }
 
+/* ════════════════════════════════════════
+   MODAL CLOSE BUTTON (UPDATED)
+════════════════════════════════════════ */
 .modal-close {
   position: absolute;
-  top: 12px;
-  right: 12px;
-  background: rgba(106, 90, 205, 0.1);
+  top: -14px;
+  right: -14px;
+  background: white;
   border: none;
   border-radius: 50%;
-  width: 30px;
-  height: 30px;
-  font-size: 0.9rem;
+  width: 32px;
+  height: 32px;
+  font-size: 1rem;
   cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--text-muted);
+  color: #333;
+  z-index: 10;
   transition: var(--transition);
 }
 
@@ -738,20 +890,169 @@ function scrollToSection(id) {
 }
 
 /* ════════════════════════════════════════
-   IMAGE MODAL
+   IMAGE MODAL (carousel + zoom)
 ════════════════════════════════════════ */
-.image-modal-box {
+.modal-box {
   position: relative;
-  max-width: 90vw;
-  max-height: 90vh;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  max-width: 98vw;
+}
+
+.modal-content {
+  display: flex;
+  flex-direction: column;
+  width: 88vw;
+  max-width: 1200px;
+  height: 90vh;
+  border-radius: var(--radius);
+  background: rgba(20, 20, 20, 0.95);
+  overflow: hidden;
+}
+
+.zoom-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  background: rgba(0, 0, 0, 0.6);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.zoom-btn {
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  color: white;
+  border-radius: 6px;
+  width: 30px;
+  height: 30px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s ease;
+}
+.zoom-btn:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.25);
+}
+.zoom-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+.zoom-btn.reset {
+  width: auto;
+  padding: 0 10px;
+  font-size: 0.9rem;
+}
+
+.zoom-label {
+  color: rgba(255, 255, 255, 0.75);
+  font-size: 0.82rem;
+  min-width: 44px;
+  text-align: center;
+}
+
+.img-viewport {
+  flex: 1;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+  min-height: 0;
 }
 
 .modal-img {
-  max-width: 90vw;
-  max-height: 85vh;
-  border-radius: var(--radius);
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
   object-fit: contain;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+  display: block;
+  pointer-events: none;
+}
+
+/* ════════════════════════════════════════
+   MODAL CAPTION (UPDATED)
+════════════════════════════════════════ */
+.modal-caption {
+  flex-shrink: 0;
+  min-height: 48px;
+  max-height: 160px;
+  overflow-y: auto;
+  padding: 12px 24px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.2) transparent;
+}
+
+.caption-intro {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 0.9rem;
+  line-height: 1.6;
+  margin: 0 0 6px 0;
+  font-weight: 500;
+}
+
+.caption-points {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.caption-points li {
+  position: relative;
+  padding: 2px 0 2px 16px;
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.75);
+  line-height: 1.5;
+}
+
+.caption-points li::before {
+  content: '▸';
+  position: absolute;
+  left: 0;
+  color: rgba(106, 90, 205, 0.9);
+  font-size: 0.72rem;
+  top: 4px;
+}
+
+.modal-nav {
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(6px);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  color: white;
+  border-radius: 10px;
+  width: 52px;
+  height: 130px;
+  font-size: 2rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease;
+  flex-shrink: 0;
+  z-index: 10;
+}
+.modal-nav:hover {
+  background: rgba(255, 255, 255, 0.25);
+  border-color: rgba(255, 255, 255, 0.6);
+}
+
+.modal-counter {
+  position: absolute;
+  bottom: -28px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: rgba(255, 255, 255, 0.75);
+  font-size: 0.85rem;
+  white-space: nowrap;
 }
 
 /* ════════════════════════════════════════
