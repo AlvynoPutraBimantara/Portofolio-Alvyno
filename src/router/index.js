@@ -1,5 +1,4 @@
 import { createRouter, createWebHistory } from 'vue-router'
-
 import Dashboard from '../views/DashboardView.vue'
 import Projects from '../views/ProjectsView.vue'
 import ProjectDetail from '../views/ProjectDetailView.vue'
@@ -11,6 +10,6 @@ const routes = [
 ]
 
 export default createRouter({
-  history: createWebHistory(),
+  history: createWebHistory('/Portofolio-Alvyno/'),
   routes,
 })
