@@ -382,7 +382,7 @@ export const bio = {
   github: 'https://github.com/AlvynoPutraBimantara',
   linkedin: 'https://linkedin.com/in/alvynoputrabimantara',
   about:
-    'Fresh Graduate Ahli Madya Teknik Informatika, berpengalaman sebagai asisten staff IT, petugas data entry dan pengembangan fullstack aplikasi berarsitektur microservice berbasis web dengan platform Vue.js, Node.js dan MySQL.',
+    'Perkenalkan, saya Alvyno Putra Bimantara A.Md. Kom., saya merupakan Fresh Graduate D3 Teknik Informatika dari Politeknik Elektronika Negeri Surabaya. Saya memiliki kompetensi dan pengalaman dalam pengembangan aplikasi web, IT support dan melakukan pekerjaan data entry pada salah satu kantor instansi pemerintah. Saya tertarik pada pembelajaran teknologi baru, termasuk penerapan Artificial Intelligence (AI) dalam alur pekerjaan sehari-hari untuk meningkatkan efisiensi.',
   profilepict: new URL('../assets/images/Pas foto 2025.jpg', import.meta.url).href,
 }
 
@@ -395,9 +395,7 @@ export const cvSections = [
       {
         title: 'Tentang Saya',
         points: [
-          'Fresh Graduate Ahli Madya Teknik Informatika dari Politeknik Elektronika Negeri Surabaya.',
-          'Berpengalaman sebagai Asisten Staf IT dan Petugas Data Entry di Dinas Lingkungan Hidup Provinsi Jawa Timur.',
-          'Berpengalaman dalam pengembangan fullstack aplikasi berarsitektur microservice berbasis web dengan platform Vue.js, Node.js dan MySQL.',
+          'Perkenalkan, saya Alvyno Putra Bimantara A.Md. Kom., saya merupakan Fresh Graduate D3 Teknik Informatika dari Politeknik Elektronika Negeri Surabaya. Saya memiliki kompetensi dan pengalaman dalam pengembangan aplikasi web, IT support dan melakukan pekerjaan data entry pada salah satu kantor instansi pemerintah. Saya tertarik pada pembelajaran teknologi baru, termasuk penerapan Artificial Intelligence (AI) dalam alur pekerjaan sehari-hari untuk meningkatkan efisiensi.',
         ],
         images: [],
       },
@@ -440,19 +438,20 @@ export const cvSections = [
         period: 'Juli 2024 – November 2024',
         badge: 'Internship',
         points: [
-          'Asisten Teknisi IT di lingkungan Dinas Lingkungan Hidup Provinsi Jawa Timur.',
-          'Developer fullstack aplikasi data entry berbasis web (Aplikasi Pengelola Buku Agenda).',
-          'Petugas data entry untuk kegiatan administrasi surat menyurat.',
+          'Bertugas sebagai asisten teknisi IT (IT support).',
+          'Mengembangkan aplikasi guna kebutuhan data entry dan pengarsiapan surat berbasis web server lokal.',
+          'Membantu staff sub-bagian tata usaha melakukan data entry pada TNDE.',
+          'Membantu staff sub-bagian tata usaha melakukan kegiatan administrasi surat menyurat',
         ],
-        tags: ['Vue.js', 'Node.js', 'MySQL', 'Apache', 'Ubuntu'],
+        tags: ['Microsoft Office', 'Vue.js', 'Node.js', 'MySQL', 'Apache', 'Ubuntu'],
         images: [
           {
             src: new URL('../assets/images/magang1.jpg', import.meta.url).href,
-            caption: { intro: 'Kegiatan magang di DLH Prov. Jatim.', points: [] },
+            caption: { intro: 'Surat konfirmasi pelaksanaan magang.', points: [] },
           },
           {
             src: new URL('../assets/images/magang2.jpg', import.meta.url).href,
-            caption: { intro: 'Suasana kantor DLH Prov. Jatim.', points: [] },
+            caption: { intro: 'Presentasi proyek magang ke staff kantor.', points: [] },
           },
         ],
       },
@@ -481,7 +480,10 @@ export const cvSections = [
             ).href,
             caption: {
               intro: 'Sertifikat Pemasangan Jaringan Komputer, UPT BLK Kota Surabaya.',
-              points: [],
+              points: [
+                'Pelatihan resmi menyangkut jaringan komputer di UPT BLK Kota Surabaya.',
+                'Materi mencakup instalasi hardware jaringan, setup LAN, WLAN, dan konfigurasi routing protocol.',
+              ],
             },
           },
         ],
@@ -511,7 +513,10 @@ export const cvSections = [
             ).href,
             caption: {
               intro: 'Sertifikat Pemasangan Jaringan Komputer dari UPT BLK Kota Surabaya.',
-              points: [],
+              points: [
+                'Sertifikat resmi pelatihan Pemasangan Jaringan Komputer dari UPT BLK Kota Surabaya.',
+                'Sertifikat kompetensi menyangkut: Instalasi hardware jaringan komputer, Setup LAN (Local Area Network) dan WLAN (Wireless LAN), Konfigurasi Routing Protocol: BGP, OSPF, EIGRP, TCP/IP. ',
+              ],
             },
           },
         ],
@@ -634,8 +639,8 @@ export const cvSections = [
             src: new URL('../assets/images/certificates/dibimbing certificate.jpg', import.meta.url)
               .href,
             caption: {
-              intro: 'Dibimbing — Fullstack Web Development.',
-              points: [],
+              intro: 'Dibimbing - Fullstack Web Development.',
+              points: ['Pengenalan fundamental Vibe-coding untuk Web Development.'],
             },
           },
         ],
