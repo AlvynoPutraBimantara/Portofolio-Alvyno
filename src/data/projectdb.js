@@ -433,6 +433,27 @@ export const cvSections = [
     faIcon: ['fas', 'briefcase'],
     items: [
       {
+        title: 'HelloCation',
+        subtitle: 'Relawan — Staff Devisi IT',
+        period: 'Juni 2026 - ...',
+        badge: 'Volunteer',
+        points: [
+          'Mengeksekusi pembuatan desain antarmuka (untuk Staff UI/UX) atau melakukan integrasi/slicing desain ke sistem WordPress.',
+          'Melakukan pemeliharaan dan Melaporkan kendala teknis sistem informasi (website) secara rutin.',
+          'Membantu divisi event dengan bertugas sebagai asisten operator Live Streaming, moderator / IT Support (misalnya memantau chat/live dashboard, menyiapkan slide presentasi) pada hari H event.',
+        ],
+        tags: ['Wordpress', 'Elementor', 'Figma', 'OBS'],
+        images: [
+          {
+            src: new URL('../assets/images/Screenshot (1633).png', import.meta.url).href,
+            caption: {
+              intro: 'Online meet briefing pekerjaan proyek web development ',
+              points: [],
+            },
+          },
+        ],
+      },
+      {
         title: 'Dinas Lingkungan Hidup Prov. Jawa Timur',
         subtitle: 'Magang — Asisten Teknisi IT dan Petugas Data Entry',
         period: 'Juli 2024 – November 2024',
@@ -566,6 +587,16 @@ export const cvSections = [
           },
           {
             src: new URL(
+              '../assets/images/certificates/ExcelPivotTableMySkill.jpg',
+              import.meta.url,
+            ).href,
+            caption: {
+              intro: 'MySkill - Pivot Table in Microdoft Excel',
+              points: ['Fundamental menggunakan tool pivot table pada Microsoft Excel'],
+            },
+          },
+          {
+            src: new URL(
               '../assets/images/certificates/Cisco Academy Intro to Cybersecurity.jpg',
               import.meta.url,
             ).href,
@@ -620,6 +651,14 @@ export const cvSections = [
             },
           },
           {
+            src: new URL('../assets/images/certificates/Vibe Coding-intro.jpg', import.meta.url)
+              .href,
+            caption: {
+              intro: 'Pengenalan fundamental Vibe-coding untuk Software Development.',
+              points: [],
+            },
+          },
+          {
             src: new URL('../assets/images/certificates/Data Analyst-intro.jpg', import.meta.url)
               .href,
             caption: {
@@ -628,10 +667,12 @@ export const cvSections = [
             },
           },
           {
-            src: new URL('../assets/images/certificates/Vibe Coding-intro.jpg', import.meta.url)
-              .href,
+            src: new URL(
+              '../assets/images/certificates/Dibimbing_Data Analytics.jpg',
+              import.meta.url,
+            ).href,
             caption: {
-              intro: 'Pengenalan fundamental Vibe-coding untuk Software Development.',
+              intro: 'Pengenalan fundamental mengenai analisis data.',
               points: [],
             },
           },
