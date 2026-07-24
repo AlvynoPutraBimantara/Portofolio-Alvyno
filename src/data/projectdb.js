@@ -566,7 +566,7 @@ export const cvSections = [
         ],
       },
       {
-        title: 'Sertifikasi pembelajaran singkat online',
+        title: 'Sertifikasi pembelajaran singkat daring',
         subtitle: '',
         period: '',
         badge: '',

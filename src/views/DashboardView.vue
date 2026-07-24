@@ -398,6 +398,7 @@ function scrollToSection(id) {
   flex-direction: column;
   gap: 8px;
   z-index: 90;
+  zoom: 1.1;
 }
 
 .side-nav-btn {
