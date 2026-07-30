@@ -507,6 +507,16 @@ export const cvSections = [
               ],
             },
           },
+          {
+            src: new URL('../assets/images/Pelatihan.jpg', import.meta.url).href,
+            caption: {
+              intro: 'Sertifikat Pemasangan Jaringan Komputer, UPT BLK Kota Surabaya.',
+              points: [
+                'Pelatihan resmi menyangkut jaringan komputer di UPT BLK Kota Surabaya.',
+                'Materi mencakup instalasi hardware jaringan, setup LAN, WLAN, dan konfigurasi routing protocol.',
+              ],
+            },
+          },
         ],
       },
     ],
