@@ -583,6 +583,21 @@ export const cvSections = [
         points: [],
         images: [
           {
+            src: new URL('../assets/images/certificates/Sertifikat Hacktiv8.jpg', import.meta.url)
+              .href,
+            caption: {
+              intro: 'IBM SkillsBuild — Build an AI Agent.',
+              points: [
+                'Fundamental AI untuk programming dan AI Agents.',
+                'Kompetensi membangun AI Agent dengan LangFlow.',
+                'AI Ethics, Generative AI, Critical Thinking, Problem Solving.',
+                'Agent Deployment Lifecycle, Agentic AI, AI Agent Workflow.',
+                'Evaluation Metrics, IBM watsonx.ai.',
+                'PWID-B1021600.',
+              ],
+            },
+          },
+          {
             src: new URL('../assets/images/certificates/BuildanAIAgent.jpg', import.meta.url).href,
             caption: {
               intro: 'IBM SkillsBuild — Build an AI Agent.',
